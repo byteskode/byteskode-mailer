@@ -3,7 +3,7 @@ byteskode-mailer
 
 [![Build Status](https://travis-ci.org/byteskode/byteskode-mailer.svg?branch=master)](https://travis-ci.org/byteskode/byteskode-mailer)
 
-byteskode sendgrid mailer with mongoose persistance support
+byteskode sendgrid mailer with mongoose persistence support
 
 *Note: mailer is configured using [config](https://github.com/lorenwest/node-config) using key `mailer`*
 

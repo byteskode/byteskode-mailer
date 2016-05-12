@@ -35,7 +35,6 @@ var _config = config.has('mailer') ? config.get('mailer') : {};
 //obtain model name
 var modelName = (_config.model || {}).name || 'Mail';
 
-
 // initialize mongoose mail model
 try {
     if (!mongoose.model(modelName)) {
