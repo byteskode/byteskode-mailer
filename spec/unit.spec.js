@@ -69,6 +69,7 @@ describe('byteskode mailer', function() {
     });
 
 
+
     it('should be able to resend email(s) in test and development mode', function(done) {
 
         var email = {
@@ -121,6 +122,46 @@ describe('byteskode mailer', function() {
 
             done(error, response);
         });
+
+    });
+
+    it('should be able to queue email in test and development mode for later send', function(done) {
+
+        var email = {
+            recipientName: faker.name.findName(),
+            token: faker.random.uuid(),
+            to: faker.internet.email(),
+            baseUrl: faker.internet.url(),
+            subject: 'Account confirmation'
+        };
+
+        Mail.on('mail:queued', function(response) {
+
+            expect(response).to.exist;
+
+            expect(response.type).to.exist;
+            expect(response.type).to.be.equal('confirm');
+            expect(response.type).to.be.a.String;
+
+            expect(response.to).to.exist;
+            expect(response.to).to.be.an.Array;
+            expect(response.to).to.include(email.to);
+
+            expect(response.sentAt).to.not.exist;
+
+            expect(response.html).to.exist;
+            expect(response.html).to.be.a.String;
+
+            expect(response.subject).to.exist;
+            expect(response.subject).to.be.equal('Account confirmation');
+            expect(response.subject).to.be.a.String;
+
+            done(null, response);
+
+        });
+
+        //queue email
+        Mail.queue('confirm', email);
 
     });
 
