@@ -47,7 +47,7 @@ Mail.queue('confirmation', mail);
 ### `send(type:String, data:Object, callback(error, mail))`
 Send will compile [mail template](https://github.com/niftylettuce/node-email-templates) found at a path obtain using the `type` parameter and `templateDir` configuration options and set `html` value to data. [View for sample](https://github.com/byteskode/byteskode-mailer/tree/master/views/emails) template directory layout.
 
-Before send all mails are persisted to mongodb using mongoose before send. Data object should constitute valid [nodemailer email fields](https://github.com/nodemailer/nodemailer#e-mail-message-fields) plus other data to be passed to mail template.
+Before send all mails are persisted to mongodb using mongoose. Data object should constitute valid [nodemailer email fields](https://github.com/nodemailer/nodemailer#e-mail-message-fields) plus other data to be passed to mail template.
 
 *Note: Current attachment are not supported*
 
@@ -77,7 +77,7 @@ Mail.resend(fuction(error, mails){
 });
 
 //or pass criteria
-Mail.resend(criteria,fuction(error, mails){
+Mail.resend(criteria, fuction(error, mails){
     ...
 });
 ```
