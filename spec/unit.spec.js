@@ -90,7 +90,7 @@ describe('byteskode mailer', function() {
         async.waterfall([
 
             function createMail(next) {
-                Mail.create(email, next);
+                Mail.queue('confirm', email, next);
             },
 
             function resend(mail, next) {
@@ -106,7 +106,7 @@ describe('byteskode mailer', function() {
             response = response[0];
 
             expect(response.type).to.exist;
-            expect(response.type).to.be.equal('Normal');
+            expect(response.type).to.be.equal('confirm');
             expect(response.type).to.be.a.String;
 
             expect(response.to).to.exist;
