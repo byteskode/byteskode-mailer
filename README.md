@@ -69,12 +69,17 @@ Mail.send('confirmation', {
         });
 ```
 
-### `resend(criteria:Object, callback(error, mails))`
+### `resend([criteria:Object], callback(error, mails))`
 Resend will try to resend failed mails that are in the database. `criteria` is a valid mongoose criteria used to specify which failed mails to resend.
 
 Example
 ```js
 Mail.resend(fuction(error, mails){
+    ...
+});
+
+//or pass criteria
+Mail.resend(criteria,fuction(error, mails){
     ...
 });
 ```
@@ -103,6 +108,17 @@ Mail.queue('confirmation', {
             baseUrl: faker.internet.url(),
             subject: 'Account confirmation'
         });
+```
+
+### `requeue(type:String, data:Object, [callback(error, mail)])`
+Unlike resend, requeue will fire `mail:queued` event on every unsent mail.
+
+Example
+```js
+Mail.requeue();
+
+//or pass criteria
+Mail.requeue(criteria);
 ```
 
 ## Configuration Options
