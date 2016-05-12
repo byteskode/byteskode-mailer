@@ -19,31 +19,26 @@ $ npm install --save mongoose byteskode-mailer
 
 ```javascript
 var mongoose = require('mongoose');
-
-//connect to mongoose if production environment
-
 var Mail = require('byteskode-mailer');
 
+//mail + template data
+var mail = {
+    recipientName: faker.name.findName(),
+    token: faker.random.uuid(),
+    to: faker.internet.email(),
+    baseUrl: faker.internet.url(),
+    subject: 'Account confirmation'
+};
+
 //send immediate
-Mail.send('confirmation', {
-            recipientName: faker.name.findName(),
-            token: faker.random.uuid(),
-            to: faker.internet.email(),
-            baseUrl: faker.internet.url(),
-            subject: 'Account confirmation'
-        }, function(error, mail){
+Mail
+    .send('confirmation', mail, function(error, mail){
             ...
-        });
+    });
 
 //queue for later sending
 //you will have to implement worker for later resend
-Mail.send('confirmation', {
-            recipientName: faker.name.findName(),
-            token: faker.random.uuid(),
-            to: faker.internet.email(),
-            baseUrl: faker.internet.url(),
-            subject: 'Account confirmation'
-        });
+Mail.queue('confirmation', mail);
 
 ```
 
@@ -58,13 +53,16 @@ Before send all mails are persisted to mongodb using mongoose before send. Data 
 
 Example
 ```js
-Mail.send('confirmation', {
-            recipientName: faker.name.findName(),
-            token: faker.random.uuid(),
-            to: faker.internet.email(),
-            baseUrl: faker.internet.url(),
-            subject: 'Account confirmation'
-        }, function(error, mail){
+//mail + template data
+var mail = {
+    recipientName: faker.name.findName(),
+    token: faker.random.uuid(),
+    to: faker.internet.email(),
+    baseUrl: faker.internet.url(),
+    subject: 'Account confirmation'
+};
+
+Mail.send('confirmation', mail, function(error, mail){
             ...
         });
 ```
@@ -101,13 +99,16 @@ Mail.on('mail:queue:error', fuction(error){
    ... 
 });
 
-Mail.queue('confirmation', {
-            recipientName: faker.name.findName(),
-            token: faker.random.uuid(),
-            to: faker.internet.email(),
-            baseUrl: faker.internet.url(),
-            subject: 'Account confirmation'
-        });
+//mail details + template data
+var mail = {
+    recipientName: faker.name.findName(),
+    token: faker.random.uuid(),
+    to: faker.internet.email(),
+    baseUrl: faker.internet.url(),
+    subject: 'Account confirmation'
+};
+
+Mail.queue('confirmation', mail);
 ```
 
 ### `requeue(type:String, data:Object, [callback(error, mail)])`
