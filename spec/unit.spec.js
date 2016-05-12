@@ -9,6 +9,10 @@ var Mail = require(path.join(__dirname, '..'));
 
 describe('byteskode mailer', function() {
 
+    beforeEach(function(done) {
+        Mail.remove(done);
+    });
+
     it('should be exported', function() {
         expect(Mail).to.exist;
     });
@@ -138,6 +142,8 @@ describe('byteskode mailer', function() {
         Mail.on('mail:queued', function(response) {
 
             expect(response).to.exist;
+
+            expect(response._id).to.exist;
 
             expect(response.type).to.exist;
             expect(response.type).to.be.equal('confirm');

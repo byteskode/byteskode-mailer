@@ -24,6 +24,7 @@ var mongoose = require('mongoose');
 
 var Mail = require('byteskode-mailer');
 
+//send immediate
 Mail.send('confirmation', {
             recipientName: faker.name.findName(),
             token: faker.random.uuid(),
@@ -33,6 +34,17 @@ Mail.send('confirmation', {
         }, function(error, mail){
             ...
         });
+
+//queue for later sending
+//you will have to implement worker for later resend
+Mail.send('confirmation', {
+            recipientName: faker.name.findName(),
+            token: faker.random.uuid(),
+            to: faker.internet.email(),
+            baseUrl: faker.internet.url(),
+            subject: 'Account confirmation'
+        });
+
 ```
 
 ## API
@@ -65,6 +77,32 @@ Example
 Mail.resend(fuction(error, mails){
     ...
 });
+```
+
+### `queue(type:String, data:Object, [callback(error, mail)])`
+Unlike send, queue will save compiled email for later processing. After mail persisted into database `mail:queued` event will be fired with an instance of saved mail. If any error occur an event `mail:queue:error` will be fired.
+
+Example
+```js
+Mail.on('mail:queued', fuction(mail){
+    ...
+    //process mail in background or real queue like kue
+    ...
+});
+
+Mail.on('mail:queue:error', fuction(error){
+   ...
+   //handle error
+   ... 
+});
+
+Mail.queue('confirmation', {
+            recipientName: faker.name.findName(),
+            token: faker.random.uuid(),
+            to: faker.internet.email(),
+            baseUrl: faker.internet.url(),
+            subject: 'Account confirmation'
+        });
 ```
 
 ## Configuration Options
