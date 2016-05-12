@@ -47,6 +47,7 @@
         "ejs": "^2.4.1",
         "email-templates": "^2.3.0",
         "execution-environment": "^1.1.0",
+        "lodash": "^4.12.0",
         "nodemailer": "^2.4.0",
         "nodemailer-sendgrid-transport": "^0.2.0"
     }
