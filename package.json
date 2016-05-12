@@ -17,7 +17,8 @@
         "nodemailer",
         "sendgrid",
         "resend",
-        "send"
+        "send",
+        "queue"
     ],
     "author": {
         "name": "lykmapipo",
