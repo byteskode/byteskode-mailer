@@ -39,11 +39,12 @@ describe('byteskode mailer', function() {
             token: faker.random.uuid(),
             to: faker.internet.email(),
             baseUrl: faker.internet.url(),
-            subject: 'Account confirmation'
+            subject: 'Account confirmation',
+            type: 'confirm'
         };
 
         Mail
-            .send('confirm', email, function(error, response) {
+            .send(email, function(error, response) {
 
                 expect(error).to.not.exist;
 
@@ -84,13 +85,14 @@ describe('byteskode mailer', function() {
             subject: 'Account confirmation',
             html: faker.lorem.sentence(),
             sender: faker.internet.email(),
-            from: faker.internet.email()
+            from: faker.internet.email(),
+            type: 'confirm'
         };
 
         async.waterfall([
 
             function createMail(next) {
-                Mail.queue('confirm', email, next);
+                Mail.queue(email, next);
             },
 
             function resend(mail, next) {
@@ -136,7 +138,8 @@ describe('byteskode mailer', function() {
             token: faker.random.uuid(),
             to: faker.internet.email(),
             baseUrl: faker.internet.url(),
-            subject: 'Account confirmation'
+            subject: 'Account confirmation',
+            type: 'confirm'
         };
 
         Mail.on('mail:queued', function(response) {
@@ -167,7 +170,7 @@ describe('byteskode mailer', function() {
         });
 
         //queue email
-        Mail.queue('confirm', email);
+        Mail.queue(email);
 
     });
 
