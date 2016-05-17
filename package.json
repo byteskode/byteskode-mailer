@@ -1,6 +1,6 @@
 {
     "name": "byteskode-mailer",
-    "version": "0.2.0",
+    "version": "1.0.0",
     "description": "byteskode sendgrid mailer with mongoose persistence support",
     "main": "index.js",
     "scripts": {
