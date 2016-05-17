@@ -27,27 +27,30 @@ var mail = {
     token: faker.random.uuid(),
     to: faker.internet.email(),
     baseUrl: faker.internet.url(),
-    subject: 'Account confirmation'
+    subject: 'Account confirmation',
+    type:'confirmation'
 };
 
 //send immediate
 Mail
-    .send('confirmation', mail, function(error, mail){
+    .send(mail, function(error, mail){
             ...
     });
 
 //queue for later sending
 //you will have to implement worker for later resend
-Mail.queue('confirmation', mail);
+Mail.queue(mail);
 
 ```
 
 ## API
 
-### `send(type:String, data:Object, callback(error, mail))`
+### `send(email:Object,[options:Object], callback(error, mail))`
 Send will compile [mail template](https://github.com/niftylettuce/node-email-templates) found at a path obtain using the `type` parameter and `templateDir` configuration options and set `html` value to data. [View for sample](https://github.com/byteskode/byteskode-mailer/tree/master/views/emails) template directory layout.
 
-Before send all mails are persisted to mongodb using mongoose. Data object should constitute valid [nodemailer email fields](https://github.com/nodemailer/nodemailer#e-mail-message-fields) plus other data to be passed to mail template.
+Before send all mails are persisted to mongodb using mongoose. mail object should constitute valid [nodemailer email fields](https://github.com/nodemailer/nodemailer#e-mail-message-fields) plus other data to be passed to mail template.
+
+If running in `production` and still want to simulate `fake sent` pass an additional object with `fake` key set to `true`.
 
 *Note: Current attachment are not supported*
 
@@ -62,9 +65,17 @@ var mail = {
     subject: 'Account confirmation'
 };
 
-Mail.send('confirmation', mail, function(error, mail){
+//real send
+Mail
+    .send(mail, function(error, mail){
             ...
-        });
+    });
+
+//simulate send
+Mail
+    .send(mail, {fake:true}, function(error, mail){
+            ...
+    });
 ```
 
 ### `resend([criteria:Object], callback(error, mails))`
@@ -82,7 +93,7 @@ Mail.resend(criteria, fuction(error, mails){
 });
 ```
 
-### `queue(type:String, data:Object, [callback(error, mail)])`
+### `queue(mail:Object,[options:Object], [callback(error, mail)])`
 Unlike send, queue will save compiled email for later processing. After mail persisted into database `mail:queued` event will be fired with an instance of saved mail. If any error occur an event `mail:queue:error` will be fired.
 
 Example
@@ -105,13 +116,14 @@ var mail = {
     token: faker.random.uuid(),
     to: faker.internet.email(),
     baseUrl: faker.internet.url(),
-    subject: 'Account confirmation'
+    subject: 'Account confirmation',
+    type:'confirmation' 
 };
 
-Mail.queue('confirmation', mail);
+Mail.queue(mail);
 ```
 
-### `requeue(type:String, data:Object, [callback(error, mail)])`
+### `requeue([criteria:Object], [callback(error, mail)])`
 Unlike resend, requeue will fire `mail:queued` event on every unsent mail.
 
 Example
