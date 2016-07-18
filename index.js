@@ -2,7 +2,7 @@
 
 /**
  * @name byteskode-mailer
- * @description byteskode sendgrid mailer
+ * @description byteskode sendgrid mailer with persistance support
  * @singleton
  */
 

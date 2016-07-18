@@ -10,13 +10,23 @@ module.exports = function(grunt) {
     grunt.initConfig({
         // Configure a mochaTest task
         mochaTest: {
-            test: {
+            unit: {
                 options: {
                     reporter: 'spec',
                     timeout: 20000
                 },
                 src: [
-                    'spec/**/*.js'
+                    'spec/**/*.js',
+                    '!spec/intergration.spec.js'
+                ]
+            },
+            intergration: {
+                options: {
+                    reporter: 'spec',
+                    timeout: 20000
+                },
+                src: [
+                    'spec/**/*.js',
                 ]
             }
         },
@@ -46,7 +56,8 @@ module.exports = function(grunt) {
     });
 
     //custom tasks
-    grunt.registerTask('default', ['jshint', 'mochaTest', 'watch']);
-    grunt.registerTask('test', ['jshint', 'mochaTest']);
+    grunt.registerTask('default', ['jshint', 'mochaTest:unit', 'watch']);
+    grunt.registerTask('test', ['jshint', 'mochaTest:unit']);
+    grunt.registerTask('intergration', ['jshint', 'mochaTest:unit', 'mochaTest:intergration']);
 
 };
