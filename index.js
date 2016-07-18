@@ -40,7 +40,7 @@ var modelName = (_config.model || {}).name || 'Mail';
 // initialize mongoose mail model
 try {
 
-    //setup kue if available
+    //setup kue queue if available
     if (_config.kue) {
         //require kue
         var kue = require('kue');
@@ -57,6 +57,7 @@ try {
     } else {
         Mail = mongoose.model(modelName);
     }
+
 } catch (e) {
     Mail = mongoose.model(modelName, MailSchema);
 }

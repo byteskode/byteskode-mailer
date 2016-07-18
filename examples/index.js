@@ -1,18 +1,13 @@
 'use strict';
 
-//byteskode mailer setup with kue worker
-process.env.NODE_ENV = 'development';
-process.env.SUPPRESS_NO_CONFIG_WARNING = true;
-
 
 //dependencies
-var path = require('path');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/byteskode-mailer');
 var Mail = require('byteskode-mailer');
 var faker = require('faker');
 
-//Probably started in your worker process
+//Alert!: Probably your should start mail processing in your worker process
 //and not main process
 Mail.worker.start();
 

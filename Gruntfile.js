@@ -58,6 +58,6 @@ module.exports = function(grunt) {
     //custom tasks
     grunt.registerTask('default', ['jshint', 'mochaTest:unit', 'watch']);
     grunt.registerTask('test', ['jshint', 'mochaTest:unit']);
-    grunt.registerTask('intergration', ['jshint', 'mochaTest:unit', 'mochaTest:intergration']);
+    grunt.registerTask('intergration', ['jshint', 'mochaTest:intergration']);
 
 };

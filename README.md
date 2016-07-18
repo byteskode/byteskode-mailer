@@ -150,8 +150,52 @@ mailer: {
             name:'<name_of_mongoose_model>',
             fields:<additional_schema_fields>
         },
-        templatesDir:<path_to_ejs_template>
+        templatesDir:<path_to_ejs_template>,
+        kue: { // ensure to install kue and add this to support kue
+            concurrency: 10,
+            timeout: 5000,
+            connection: {}
+        }
     }
+```
+
+## Kue Integration
+To add support to `kue` ensure you have installed kue and supply the required configuration. The presence of `kue` configuration in `mailer` config options will signal the use of `kue` publisher and worker
+
+```sh
+$ npm install --save kue
+```
+
+### Kue Mail Worker
+In your worker process start the queued mail worker as below
+
+```js
+var mongoose = require('mongoose');
+var Mail = require('byteskode-mailer');
+
+//Alert!: Probably your should start mail processing in your worker process
+//and not main process
+Mail.worker.start();
+
+//listen for the worker queue events
+//all kue queue events are applicable here
+Mail.worker.queue.on('job complete', function(id, result) {
+    console.log(id, result);
+});
+
+//anywhere in your main process
+//queue email for send
+Mail.queue({
+    recipientName: faker.name.findName(),
+    token: faker.random.uuid(),
+    to: faker.internet.email(),
+    baseUrl: faker.internet.url(),
+    subject: 'Account confirmation',
+    html: faker.lorem.sentence(),
+    sender: faker.internet.email(),
+    from: faker.internet.email(),
+    type: 'confirm'
+});
 ```
 
 ## Testing

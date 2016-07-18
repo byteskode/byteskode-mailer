@@ -12,17 +12,19 @@
         "url": "https://github.com/byteskode/byteskode-mailer.git"
     },
     "keywords": [
-        "mongoose",
-        "mongoose-plugin",
         "byteskode",
         "byteskode-mailer",
+        "mongoose",
+        "mongoose-plugin",
         "mail",
         "nodemailer",
         "sendgrid",
         "resend",
         "send",
         "queue",
-        "persist"
+        "persist",
+        "kue",
+        "kue-mailer"
     ],
     "author": {
         "name": "lykmapipo",
