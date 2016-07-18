@@ -42,16 +42,16 @@
         "grunt-contrib-watch": "^0.6.1",
         "grunt-mocha-test": "^0.12.7",
         "jshint-stylish": "^2.0.1",
-        "mocha": "^2.3.3",
-        "mongoose": "^4.2.5"
+        "mocha": "^2.5.3",
+        "mongoose": "^4.5.4"
     },
     "dependencies": {
-        "config": "^1.20.1",
-        "ejs": "^2.4.1",
-        "email-templates": "^2.3.0",
+        "config": "^1.21.0",
+        "ejs": "^2.4.2",
+        "email-templates": "^2.3.4",
         "execution-environment": "^1.1.0",
-        "lodash": "^4.12.0",
-        "nodemailer": "^2.4.0",
+        "lodash": "^4.13.1",
+        "nodemailer": "^2.5.0",
         "nodemailer-sendgrid-transport": "^0.2.0"
     }
 }

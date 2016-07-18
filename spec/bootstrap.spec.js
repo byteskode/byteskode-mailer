@@ -5,7 +5,7 @@ process.env.NODE_ENV = 'test';
 //dependencies
 var async = require('async');
 var mongoose = require('mongoose');
-
+mongoose.Promise = global.Promise;
 
 before(function(done) {
     //setup database
