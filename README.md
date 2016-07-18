@@ -3,7 +3,7 @@ byteskode-mailer
 
 [![Build Status](https://travis-ci.org/byteskode/byteskode-mailer.svg?branch=master)](https://travis-ci.org/byteskode/byteskode-mailer)
 
-byteskode sendgrid mailer with mongoose persistence support
+byteskode sendgrid mailer with mongoose persistence and kue support
 
 *Note: mailer is configured using [config](https://github.com/lorenwest/node-config) using key `mailer`*
 
@@ -160,7 +160,7 @@ mailer: {
 ```
 
 ## Kue Integration
-To add support to `kue` ensure you have installed kue and supply the required configuration. The presence of `kue` configuration in `mailer` config options will signal the use of `kue` publisher and worker
+To add support to `kue` ensure you have installed kue and supply the required configuration. The presence of `kue` configuration in `mailer` config options will signal the use of `kue` publisher and worker. [See Example](https://github.com/byteskode/byteskode-mailer/blob/master/examples/index.js)
 
 ```sh
 $ npm install --save kue

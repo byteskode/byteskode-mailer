@@ -1,7 +1,7 @@
 {
     "name": "byteskode-mailer",
-    "version": "1.0.0",
-    "description": "byteskode sendgrid mailer with mongoose persistence support",
+    "version": "1.1.0",
+    "description": "byteskode sendgrid mailer with mongoose persistence and kue support",
     "main": "index.js",
     "scripts": {
         "test": "grunt test",
@@ -24,7 +24,8 @@
         "queue",
         "persist",
         "kue",
-        "kue-mailer"
+        "worker",
+        "mailer"
     ],
     "author": {
         "name": "lykmapipo",
