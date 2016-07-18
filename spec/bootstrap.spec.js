@@ -5,6 +5,13 @@ process.env.NODE_ENV = 'test';
 //dependencies
 var async = require('async');
 var mongoose = require('mongoose');
+var kue = require('kue');
+
+//redis client for database cleanups
+var redis = kue.redis.createClientFactory({
+    redis: {}
+});
+
 mongoose.Promise = global.Promise;
 
 before(function(done) {
@@ -35,9 +42,25 @@ function wipe(done) {
     async.parallel(cleanups, done);
 }
 
+/**
+ * @description clean up a database
+ */
+function cleanup(done) {
+    redis
+        .keys('q*', function(error, rows) {
+            if (error) {
+                done(error);
+            } else {
+                async.each(rows, function(row, next) {
+                    redis.del(row, next);
+                }, done);
+            }
+        });
+}
+
 //clean database
 after(function(done) {
-    wipe(function(error) {
+    async.parallel([wipe, cleanup], function(error) {
         if (error && error.message !== 'ns not found') {
             done(error);
         } else {

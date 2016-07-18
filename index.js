@@ -15,11 +15,13 @@ if (!(process.env || {}).NODE_ENV) {
 process.env.SUPPRESS_NO_CONFIG_WARNING = true;
 
 //dependencies
+var path = require('path');
 var config = require('config');
 var path = require('path');
 var mongoose = require('mongoose');
 var environment = require('execution-environment');
 var MailSchema = require(path.join(__dirname, 'lib', 'schema'));
+var KueWorker = require(path.join(__dirname, 'lib', 'kue', 'worker'));
 var Mail;
 
 //configure execution-environment
@@ -37,6 +39,19 @@ var modelName = (_config.model || {}).name || 'Mail';
 
 // initialize mongoose mail model
 try {
+
+    //setup kue if available
+    if (_config.kue) {
+        //require kue
+        var kue = require('kue');
+
+        //initialize kue job publish queue
+        MailSchema.statics._queue = kue.createQueue(_config.kue);
+
+        //exports kue job processing worker
+        MailSchema.statics.worker = KueWorker;
+    }
+
     if (!mongoose.model(modelName)) {
         Mail = mongoose.model(modelName, MailSchema);
     } else {

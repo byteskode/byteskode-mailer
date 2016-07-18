@@ -4,7 +4,8 @@
     "description": "byteskode sendgrid mailer with mongoose persistence support",
     "main": "index.js",
     "scripts": {
-        "test": "grunt test"
+        "test": "grunt test",
+        "example": "npm link . && npm link byteskode-mailer && node examples/index.js"
     },
     "repository": {
         "type": "git",

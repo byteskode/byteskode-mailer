@@ -174,4 +174,12 @@ describe('byteskode mailer', function() {
 
     });
 
+    after(function(done) {
+        if (Mail._queue) {
+            Mail._queue.shutdown(5000, done);
+        } else {
+            done();
+        }
+    });
+
 });
