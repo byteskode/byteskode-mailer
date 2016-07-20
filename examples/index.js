@@ -16,6 +16,10 @@ Mail.worker.queue.on('job complete', function(id, result) {
     console.log(id, result);
 });
 
+Mail.worker.queue.on('error', function(error) {
+    console.log('error', error);
+});
+
 setInterval(function(argument) {
     
     //queue email for send
